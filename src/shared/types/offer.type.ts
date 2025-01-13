@@ -1,26 +1,48 @@
-import { City } from './city.type.js';
-import { Coordinates } from './coordinates.js';
 import { User } from './user.type.js';
-import { HousingType } from './housing.type.js';
+
+
+export type Cities = 'Paris' | 'Cologne' | 'Hamburg' | 'Dusseldorf' | 'Brussels' | 'Amsterdam';
 
 export type Amenity = 'Breakfast' | 'Air conditioning' | 'Laptop friendly workspace' | 'Baby seat' | 'Washer' | 'Towels' | 'Fridge';
 
+export const CitiesEnum = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+} as const;
+
+export const AmenityEnum = {
+  Breakfast: 'Breakfast',
+  AirConditioning: 'Air conditioning',
+  LaptopFriendlyWorkspace: 'Laptop friendly workspace',
+  BabySeat: 'Baby seat',
+  Washer: 'Washer',
+  Towels: 'Towels',
+  Fridge: 'Fridge',
+} as const;
+
+export type Coordinates = {
+    latatude: number,
+    longitude: number,
+}
+
 export type Offer = {
-    title: string;
+    name: string;
     description: string;
-    publishedDate: Date;
-    city: City['name'];
-    previewImageUrl: string;
-    photos: string[];
-    isPremium: boolean;
-    isFavorite: boolean;
+    createData: Date;
+    city: Cities;
+    previewImage: string,
+    images: string[];
+    premium: boolean;
+    favorite: boolean;
     rating: number;
-    type: HousingType;
-    rooms: number;
+    bedrooms: number;
     guests: number;
-    price: number;
     amenities: Amenity[];
-    author: User;
-    commentsCount: number;
-    location: Coordinates;
+    autor: User;
+    commentsCount: string;
+    coordinates: Coordinates;
 }
