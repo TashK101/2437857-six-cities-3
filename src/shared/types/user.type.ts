@@ -1,10 +1,6 @@
-
-type UserRole = 'ordinary' | 'pro';
-
 export type User = {
-    name: string;
+    name: string,
     email: string;
-    avatarUrl?: string;
-    password: string;
-    userRole: UserRole;
-}
+    avatarPath: string;
+    typeUser: 'ordinary' |'pro';
+  }
