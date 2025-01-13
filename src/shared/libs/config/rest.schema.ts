@@ -11,6 +11,7 @@ export type RestSchema = {
   DB_PASSWORD: string;
   DB_PORT: string;
   DB_NAME: string;
+  UPLOAD_DIRECTORY: string;
 }
 
 export const configRestSchema = convict<RestSchema>({
@@ -18,19 +19,19 @@ export const configRestSchema = convict<RestSchema>({
     doc: 'Port for incoming connections',
     format: 'port',
     env: 'PORT',
-    default: 4000
+    default: 4000,
   },
   SALT: {
     doc: 'Salt for password hash',
     format: String,
     env: 'SALT',
-    default: ''
+    default: '',
   },
   DB_HOST: {
     doc: 'IP address of the database server (MongoDB)',
     format: 'ipaddress',
     env: 'DB_HOST',
-    default: '127.0.0.1'
+    default: '127.0.0.1',
   },
   DB_USER: {
     doc: 'Username to connect to the database',
@@ -54,6 +55,12 @@ export const configRestSchema = convict<RestSchema>({
     doc: 'Database name (MongoDB)',
     format: String,
     env: 'DB_NAME',
-    default: 'six-cities'
+    default: 'six-cities',
+  },
+  UPLOAD_DIRECTORY: {
+    doc: 'The directory where uploads are stored.',
+    format: String,
+    default: 'null',
+    env: 'UPLOAD_DIRECTORY'
   },
 });
