@@ -1,0 +1,56 @@
+# Get offer by id
+GET http://localhost:4000/offers/62d31b60a7f14b7a8c87ffdc HTTP/1.1
+
+###
+
+## Get all offers
+GET http://localhost:4000/offers HTTP/1.1
+
+###
+
+## Create new offer
+
+POST http://localhost:4000/offers HTTP/1.1
+Content-Type: application/json
+
+{
+  "tytle": "Luxurious Apartment",
+  "description": "A beautiful apartment located in the heart of the city.",
+  "createDate": "2023-12-10T15:30:00.000Z",
+  "city": "New York",
+  "previewImage": "lux-apartment.jpg",
+  "images": ["living-room.jpg", "bedroom.jpg", "kitchen.jpg"],
+  "premium": true,
+  "favorite": false,
+  "rating": 4.5,
+  "bedrooms": 2,
+  "guests": 4,
+  "amenities": ["wifi", "pool", "parking"],
+  "author": "user56789",
+  "commentsCount": "5",
+  "coordinates": {
+    "latitude": "40.712776",
+    "longitude": "-74.005974"
+  }
+}
+
+###
+
+## Delete offer by id
+
+DELETE http://localhost:4000/offers/62d31b60a7f14b7a8c87ffdc HTTP/1.1
+
+###
+
+## Update offer by id
+
+PATCH http://localhost:4000/offers/62d31b60a7f14b7a8c87ffdc HTTP/1.1
+Content-Type: application/json
+
+{
+  "tytle": "Updated Luxurious Apartment",
+  "description": "An upgraded description of the luxurious apartment.",
+  "rating": 4.8
+}
+
+###

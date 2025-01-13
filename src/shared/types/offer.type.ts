@@ -30,9 +30,9 @@ export type Coordinates = {
 }
 
 export type Offer = {
-    name: string;
+    tytle: string;
     description: string;
-    createData: Date;
+    createDate: Date;
     city: Cities;
     previewImage: string,
     images: string[];
@@ -42,7 +42,7 @@ export type Offer = {
     bedrooms: number;
     guests: number;
     amenities: Amenity[];
-    autor: User;
+    author: User;
     commentsCount: string;
     coordinates: Coordinates;
 }
