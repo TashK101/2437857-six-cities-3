@@ -10,6 +10,7 @@ export class HelpCommand implements Command {
         Программа для подготовки данных для REST API сервера.
         Пример:
             cli.js --<command> [--arguments]
+            
         Команды:
             --version:                   # выводит номер версии
             --help:                      # печатает этот текст
