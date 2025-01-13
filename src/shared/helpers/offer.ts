@@ -29,9 +29,9 @@ export function createOffer(offerData: string): Offer {
   };
 
   return {
-    name,
+    tytle: name,
     description,
-    createData: new Date(createData),
+    createDate: new Date(createData),
     city: city as Cities,
     previewImage,
     images: images.split('|'),
@@ -41,7 +41,7 @@ export function createOffer(offerData: string): Offer {
     bedrooms: Number(bedrooms),
     guests: Number(guests),
     amenities: amenities.split('|') as Amenity[],
-    autor: autorTest,
+    author: autorTest,
     commentsCount: commentsCount,
     coordinates: {
       latatude: Number(latatude),

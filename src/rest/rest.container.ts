@@ -7,9 +7,12 @@ import {
   DatabaseClient,
   MongoDatabaseClient,
 } from '../shared/libs/database-client/index.js';
+import { AppExceptionFilter, ExceptionFilter } from '../shared/libs/rest/index.js';
 
 export function createRestApplicationContainer() {
   const restApplicationContainer = new Container();
+
+  restApplicationContainer.bind<ExceptionFilter>(Component.ExceptionFilter).to(AppExceptionFilter).inSingletonScope();
 
   restApplicationContainer
     .bind<RestApplication>(Component.RestApplication)
