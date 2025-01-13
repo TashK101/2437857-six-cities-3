@@ -5,7 +5,6 @@ export function createOffer(offerData: string): Offer {
   const [
     name,
     description,
-    price,
     createData,
     city,
     previewImage,
@@ -24,7 +23,7 @@ export function createOffer(offerData: string): Offer {
 
   const autorTest: User = {
     name: 'Test',
-    email: 'exanple@example.com',
+    email: 'example@example.com',
     avatarPath: 'avatar/path',
     typeUser: 'ordinary'
   };
@@ -48,6 +47,5 @@ export function createOffer(offerData: string): Offer {
       latatude: Number(latatude),
       longitude: Number(longitude),
     },
-    price: Number(price)
   };
 }
