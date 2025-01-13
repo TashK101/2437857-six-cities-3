@@ -62,10 +62,10 @@ export class ImportCommand implements Command {
     );
 
     await this.offerService.create({
-      autor: user.id,
-      name: offer.tytle,
+      author: user.id,
+      tytle: offer.tytle,
       description: offer.description,
-      createData: offer.createDate,
+      createDate: offer.createDate,
       city: offer.city,
       previewImage: offer.previewImage,
       images: offer.images,
@@ -77,6 +77,8 @@ export class ImportCommand implements Command {
       amenities: offer.amenities,
       commentsCount: Number(offer.commentsCount),
       coordinates: offer.coordinates,
+      userId: '',
+      price: 0
     });
   }
 

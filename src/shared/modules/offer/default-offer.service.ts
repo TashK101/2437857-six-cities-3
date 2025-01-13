@@ -18,7 +18,7 @@ export class DefaultOfferService implements OfferService {
 
   public async create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>> {
     const result = await this.offerModel.create(dto);
-    this.logger.info(`New offer created: ${dto.name}`);
+    this.logger.info(`New offer created: ${dto.tytle}`);
 
     return result;
   }
@@ -30,7 +30,7 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async find(): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel.find().populate(['userId', 'categories']).exec();
+    return this.offerModel.find().populate(['userId']).exec();
   }
 
   public async deleteById(
@@ -45,7 +45,7 @@ export class DefaultOfferService implements OfferService {
   ): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
       .findByIdAndUpdate(offerId, dto, { new: true })
-      .populate(['userId', 'categories'])
+      .populate(['userId'])
       .exec();
   }
 
@@ -56,7 +56,7 @@ export class DefaultOfferService implements OfferService {
     const limit = count ?? DEFAULT_OFFER_COUNT;
     return this.offerModel
       .find({ categories: categoryId }, {}, { limit })
-      .populate(['userId', 'categories'])
+      .populate(['userId'])
       .exec();
   }
 
@@ -76,23 +76,23 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async findNew(count: number): Promise<DocumentType<OfferEntity>[]> {
+  public async findFavorite(count: number): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .find()
+      .find({ favorite: true })
       .sort({ createdAt: SortType.Down })
       .limit(count)
-      .populate(['userId', 'categories'])
+      .populate(['userId'])
       .exec();
   }
 
-  public async findDiscussed(
+  public async findPremium(
     count: number
   ): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .find()
+      .find({ premium: true })
       .sort({ commentCount: SortType.Down })
       .limit(count)
-      .populate(['userId', 'categories'])
+      .populate(['userId'])
       .exec();
   }
 }

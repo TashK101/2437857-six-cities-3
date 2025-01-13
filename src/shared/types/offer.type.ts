@@ -32,6 +32,7 @@ export type Coordinates = {
 export type Offer = {
     tytle: string;
     description: string;
+    price: number;
     createDate: Date;
     city: Cities;
     previewImage: string,

@@ -1,11 +1,14 @@
 import { inject, injectable } from 'inversify';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import {
   BaseController,
   HttpError,
   HttpMethod,
+  ValidateDtoMiddleware,
 } from '../../libs/rest/index.js';
+import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/validate-objectid.middleware.js';
+import { UploadFileMiddleware } from '../../libs/rest/middleware/upload-file.middleware.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { CreateUserRequest } from './type/create-user-request.type.js';
@@ -14,6 +17,8 @@ import { Config, RestSchema } from '../../libs/config/index.js';
 import { fillDTO } from '../../helpers/index.js';
 import { UserRdo } from './rdo/user.rdo.js';
 import { LoginUserRequest } from './type/login-user-request.type.js';
+import { CreateUserDto } from './dto/create-user.dto.js';
+import { LoginUserDto } from './dto/login-user.dto.js';
 
 @injectable()
 export class UserController extends BaseController {
@@ -24,16 +29,29 @@ export class UserController extends BaseController {
   ) {
     super(logger);
     this.logger.info('Register routes for UserController…');
-
     this.addRoute({
       path: '/register',
       method: HttpMethod.Post,
       handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto)],
     });
     this.addRoute({
       path: '/login',
       method: HttpMethod.Post,
       handler: this.login,
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto)],
+    });
+    this.addRoute({
+      path: '/:userId/avatar',
+      method: HttpMethod.Post,
+      handler: this.uploadAvatar,
+      middlewares: [
+        new ValidateObjectIdMiddleware('userId'),
+        new UploadFileMiddleware(
+          this.configService.get('UPLOAD_DIRECTORY'),
+          'avatar'
+        ),
+      ],
     });
   }
 
@@ -42,7 +60,6 @@ export class UserController extends BaseController {
     res: Response
   ): Promise<void> {
     const existsUser = await this.userService.findByEmail(body.email);
-
     if (existsUser) {
       throw new HttpError(
         StatusCodes.CONFLICT,
@@ -50,7 +67,6 @@ export class UserController extends BaseController {
         'UserController'
       );
     }
-
     const result = await this.userService.create(
       body,
       this.configService.get('SALT')
@@ -63,7 +79,6 @@ export class UserController extends BaseController {
     _res: Response
   ): Promise<void> {
     const existsUser = await this.userService.findByEmail(body.email);
-
     if (!existsUser) {
       throw new HttpError(
         StatusCodes.UNAUTHORIZED,
@@ -71,11 +86,16 @@ export class UserController extends BaseController {
         'UserController'
       );
     }
-
     throw new HttpError(
       StatusCodes.NOT_IMPLEMENTED,
       'Not implemented',
       'UserController'
     );
+  }
+
+  public async uploadAvatar(req: Request, res: Response) {
+    this.created(res, {
+      filepath: req.file?.path,
+    });
   }
 }

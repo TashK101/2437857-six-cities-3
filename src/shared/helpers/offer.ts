@@ -1,11 +1,13 @@
 import { Offer, Cities, Amenity } from '../types/offer.type.js';
 import { User } from '../types/user.type.js';
 
+
 export function createOffer(offerData: string): Offer {
   const [
-    name,
+    tytle,
     description,
-    createData,
+    price,
+    createDate,
     city,
     previewImage,
     images,
@@ -29,9 +31,10 @@ export function createOffer(offerData: string): Offer {
   };
 
   return {
-    tytle: name,
+    tytle: tytle,
     description,
-    createDate: new Date(createData),
+    price: Number(price),
+    createDate: new Date(createDate),
     city: city as Cities,
     previewImage,
     images: images.split('|'),

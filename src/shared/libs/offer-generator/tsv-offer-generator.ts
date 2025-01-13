@@ -16,8 +16,8 @@ export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockData: MockServerData) {}
 
   public generate(): string {
-    const name = getRandomItem<string>(this.mockData.name);
-    const describe = getRandomItem<string>(this.mockData.describe);
+    const tytle = getRandomItem<string>(this.mockData.tytle);
+    const description = getRandomItem<string>(this.mockData.description);
     const city = getRandomItem<string>(this.mockData.city);
     const previewImage = getRandomItem(this.mockData.previewImage);
     const images = getRandomItems<string>(this.mockData.images).join('|');
@@ -33,14 +33,14 @@ export class TSVOfferGenerator implements OfferGenerator {
       generateRandomValue(1000, 3000).toString(),
       generateRandomValue(1000, 3000).toString(),
     ];
-    const createData = dayjs()
+    const createDate = dayjs()
       .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
       .toISOString();
 
     return [
-      name,
-      describe,
-      createData,
+      tytle,
+      description,
+      createDate,
       city,
       previewImage,
       images,
