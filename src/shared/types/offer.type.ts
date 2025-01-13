@@ -6,22 +6,22 @@ export type Cities = 'Paris' | 'Cologne' | 'Hamburg' | 'Dusseldorf' | 'Brussels'
 export type Amenity = 'Breakfast' | 'Air conditioning' | 'Laptop friendly workspace' | 'Baby seat' | 'Washer' | 'Towels' | 'Fridge';
 
 export const CitiesEnum = {
-    Paris: 'Paris',
-    Cologne: 'Cologne',
-    Hamburg: 'Hamburg',
-    Dusseldorf: 'Dusseldorf',
-    Brussels: 'Brussels',
-    Amsterdam: 'Amsterdam',
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
 } as const;
 
 export const AmenityEnum = {
-    Breakfast: 'Breakfast',
-    AirConditioning: 'Air conditioning',
-    LaptopFriendlyWorkspace: 'Laptop friendly workspace',
-    BabySeat: 'Baby seat',
-    Washer: 'Washer',
-    Towels: 'Towels',
-    Fridge: 'Fridge',
+  Breakfast: 'Breakfast',
+  AirConditioning: 'Air conditioning',
+  LaptopFriendlyWorkspace: 'Laptop friendly workspace',
+  BabySeat: 'Baby seat',
+  Washer: 'Washer',
+  Towels: 'Towels',
+  Fridge: 'Fridge',
 } as const;
 
 export type Coordinates = {
