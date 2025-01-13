@@ -1,0 +1,260 @@
+openapi: 3.1.0
+info:
+  title: "Six Cities"
+  description: API for the Six Cities application.
+  version: 1.0.0
+servers:
+  - url: "https://api.six-cities.example.com"
+    description: "Production server"
+  - url: "https://api.six-cities-dev.example.com"
+    description: "Development server"
+tags:
+  - name: Users
+  - name: Offers
+  - name: Comments
+paths:
+  /users/create:
+    post:
+      tags: [Users]
+      summary: Create a new user
+      description: Allows anonymous clients to create new users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+                - type
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 15
+                  description: "Name of the user."
+                email:
+                  type: string
+                  format: email
+                  description: "Unique email of the user."
+                avatar:
+                  type: string
+                  format: uri
+                  description: "URL to the user's avatar image in .jpg or .png format."
+                password:
+                  type: string
+                  minLength: 6
+                  maxLength: 12
+                  description: "Password for the user account."
+                type:
+                  type: string
+                  enum: ["ordinary", "pro"]
+                  description: "Type of user."
+      responses:
+        "201": 
+          description: User created successfully
+        "400": 
+          description: Invalid registration attempt
+
+  /users/login:
+    post:
+      tags: [Users]
+      summary: Log into the acc
+      description: Allows anonymous clients to log into their accounts
+      requestBody:
+        required: true
+      responses:
+        "200": 
+          description: Successfully logged in
+        "400": 
+          description: Invalid email or password
+        "404":
+          description: User not found
+
+  /users/authorize:
+    get:
+      tags: [Users]
+      summary: Find out whether the user is authorized 
+      responses:
+        "200": 
+          description: User is authorized
+        "401": 
+          description: Unauthorized
+
+  /users/{id}:
+    get:
+      tags: [Users]
+      summary: User data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200": 
+          description: User details
+        "404": 
+          description: User not found
+        "401": 
+          description: Unauthorized
+
+  /offers/create:
+    post:
+      tags: [Offers]
+      summary: Create a new offer
+      requestBody:
+        required: true
+      responses:
+        "201": 
+          description: Offer created
+        "400": 
+          description: Invalid data
+
+  /offers/{id}:
+    get:
+      tags: [Offers]
+      summary: Get offer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        "200": 
+          description: Offer details
+        "404": 
+          description: Offer not found
+
+  /comments/offers/{offerId}:
+      get:
+        tags: [Comments]
+        summary: Retrieve comments for an offer
+        description: Returns a list of comments related to a specific offer.
+        parameters:
+          - name: offerId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          "200":
+            description: List of comments for the offer.
+          "404":
+            description: Offer not found.
+
+  /comments/add:
+    post:
+      tags: [Comments]
+      summary: Add a comment to an offer
+      description: Allows authorized users to add a comment to a specific offer.
+      requestBody:
+        required: true
+      responses:
+        "201":
+          description: Comment successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        "400":
+          description: Invalid request data.
+        "404":
+          description: Offer not found.
+        "401":
+          description: Unauthorized.
+
+
+components:
+  schemas:
+    CreateUser:
+      type: object
+      properties:
+        email: 
+          type: string
+          format: email
+          example: keks@htmlacademy.ru
+        password: 
+          type: string
+          format: password
+
+    LoginUser:
+      type: object
+      properties:
+        email: 
+          type: string
+          format: email
+        password: 
+          type: string
+          format: password
+
+    User:
+      type: object
+      properties:
+        id: 
+          type: string
+        email: 
+          type: string
+          format: email
+        name: 
+          type: string
+        avatarUrl: 
+          type: string 
+          nullable: true
+
+    CreateOfferRequest:
+      type: object
+      properties:
+        title: 
+          type: string
+        description: 
+          type: string
+        price: 
+          type: number
+        city: 
+          type: string
+        images: 
+          type: array
+          items: 
+            type: string
+        isPremium: 
+          type: boolean
+        isFavorite: 
+          type: boolean
+
+    Offer:
+      allOf:
+        - type: object
+          properties:
+            id: 
+              type: string
+            rating: 
+              type: number
+
+    CreateCommentRequest:
+      type: object
+      properties:
+        offerId: 
+          type: string
+        text: 
+          type: string
+        rating: 
+          type: number
+
+    Comment:
+      type: object
+      properties:
+        id: 
+          type: string
+        offerId: 
+          type: string
+        text: 
+          type: string
+        rating: 
+          type: number
+        createdAt: 
+          type: string
+          format: date-time
+
+        
